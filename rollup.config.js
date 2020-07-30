@@ -1,7 +1,7 @@
 import merge from 'deepmerge';
 // use createSpaConfig for bundling a Single Page App
 import { createSpaConfig } from '@open-wc/building-rollup';
-import copy from 'rollup-plugin-copy'
+import copy from 'rollup-plugin-copy';
 
 // use createBasicConfig to do regular JS to JS bundling
 // import { createBasicConfig } from '@open-wc/building-rollup';
@@ -19,6 +19,10 @@ const baseConfig = createSpaConfig({
 
   // set to true to inject the service worker registration into your index.html
   injectServiceWorker: false,
+
+  html: {
+    publicPath: '/pomo'
+  },
 });
 
 export default merge(baseConfig, {
