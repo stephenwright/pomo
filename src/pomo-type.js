@@ -1,4 +1,5 @@
 import { LitElement, html, css  } from 'lit-element';
+import * as icons from './icons.js';
 
 class PomoType extends LitElement {
   static get properties() {
@@ -36,7 +37,7 @@ class PomoType extends LitElement {
         display: inline-block;
         fill: black;
       }
-      .symbol img {
+      .symbol svg {
         height: 60%;
         width: 60%;
         margin: 20%;
@@ -67,7 +68,7 @@ class PomoType extends LitElement {
       .water { background-color: var(--water-light); border-color: var(--water-dark); }
 
       /* symbols */
-      .bug .symbol { background: var(--bug); }
+      .bug .symbol { background-color: var(--bug); }
       .dark .symbol { background-color: var(--dark); }
       .dragon .symbol { background-color: var(--dragon); }
       .electric .symbol { background-color: var(--electric); }
@@ -92,7 +93,7 @@ class PomoType extends LitElement {
     return html`
       <span class="type ${this.name.toLowerCase()}">
         ${this.hideLabel ? '' : html`<span class="title">${this.name}</span>`}
-        ${this.hideSymbol ? '' : html`<span class="symbol"><img src="./icons/${this.name.toLowerCase()}.svg" /></span>`}
+        ${this.hideSymbol ? '' : html`<span class="symbol">${icons[this.name.toLowerCase()]}</span>`}
       </span>
     `;
   }
