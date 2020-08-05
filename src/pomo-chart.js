@@ -5,7 +5,7 @@ import './pomo-type.js';
 class PomoChart extends LitElement {
   static get properties() {
     return {
-      hideLabels: { type: Boolean, attribute: false },
+      hideLabels: { type: Boolean, attribute: 'hide-labels' },
     };
   }
 
@@ -25,7 +25,7 @@ class PomoChart extends LitElement {
       .row {
         background-color: white;
         display: grid;
-        grid-template-columns: 2fr 4fr 1fr 4fr 2fr;
+        grid-template-columns: 4fr 2fr 1fr 2fr 4fr;
         border: 1px solid #ccc;
         padding: 0px;
         margin: 3px;
@@ -39,11 +39,7 @@ class PomoChart extends LitElement {
         font-weight: bold;
       }
 
-      .vulnerable,
-      .weak,
-      .name,
-      .strong,
-      .resist {
+      .col {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -52,7 +48,6 @@ class PomoChart extends LitElement {
         margin: 1px;
         padding: 3px;
         position: relative;
-        flex-shrink: 0;
       }
 
       .vulnerable,
@@ -64,14 +59,12 @@ class PomoChart extends LitElement {
         justify-content: flex-start;
       }
 
-      .noeffect,
-      .immune {
+      .none {
         background: repeating-linear-gradient(45deg, #eee, #eee 5px, #ccc 5px, #ccc 10px);
         display: flex;
         align-items: center;
       }
-      .noeffect .type,
-      .immune .type {
+      .none .type {
         font-weight: bold;
       }
 
@@ -91,12 +84,8 @@ class PomoChart extends LitElement {
           font-size: .7em;
           font-weight: normal;
         }
-        .immune,
-        .noeffect,
-        .vulnerable,
-        .weak,
-        .strong,
-        .resist {
+        .col,
+        .none {
           flex-direction: column;
           justify-content: center;
         }
@@ -110,11 +99,11 @@ class PomoChart extends LitElement {
         <label>Hide Labels <input type="checkbox" @change="${(e) => this.hideLabels = e.target.checked}" /></label>
       </div>
       <div class="row head">
-        <div class="vulnerable">Vulnerable</div>
-        <div class="weak">Not Very Effective</div>
-        <div class="name">Type</div>
-        <div class="strong">Super Effective</div>
-        <div class="resist">Resist</div>
+        <div class="col weak">Not Very Effective</div>
+        <div class="col vulnerable">Vulnerable</div>
+        <div class="col name">Type</div>
+        <div class="col strong">Super Effective</div>
+        <div class="col resist">Resist</div>
       </div>
       <div class="body">
         ${TYPES.map((type) => this._renderTypeRow(type))}
@@ -125,22 +114,22 @@ class PomoChart extends LitElement {
   _renderTypeRow(type) {
     return html`
       <div class="row">
-        <div class="vulnerable">
+        <div class="col weak">
+          ${this._renderTypes(type.weak)}
+          <div class='none noeffect'>${this._renderTypes(type.noeffect)}</div>
+        </div>
+        <div class="col vulnerable">
           ${this._renderTypes(type.vulnerable)}
         </div>
-        <div class="weak">
-          ${this._renderTypes(type.weak)}
-          <div class='noeffect'>${this._renderTypes(type.noeffect)}</div>
-        </div>
-        <div class="name">
+        <div class="col name">
           ${this._renderType(type.name)}
         </div>
-        <div class="strong">
+        <div class="col strong">
           ${this._renderTypes(type.strong)}
         </div>
-        <div class="resist">
+        <div class="col resist">
           ${this._renderTypes(type.resist)}
-          <div class='immune'>${this._renderTypes(type.immune)}</div>
+          <div class='none immune'>${this._renderTypes(type.immune)}</div>
         </div>
       </div>
     `;
