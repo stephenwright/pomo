@@ -12,10 +12,10 @@ class PomoChart extends LitElement {
   static get styles() {
     return css`
       :host {
+        display: inline-block;
         font-family: monospace;
         background-color: #eee;
         padding: 3px;
-        width: 100%;
       }
 
       .row:hover {
@@ -52,6 +52,7 @@ class PomoChart extends LitElement {
         margin: 1px;
         padding: 3px;
         position: relative;
+        flex-shrink: 0;
       }
 
       .vulnerable,
@@ -84,14 +85,19 @@ class PomoChart extends LitElement {
 
       @media(max-width: 1000px) {
         .row {
-          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          grid-template-columns: repeat(5, 1fr);
         }
+        .head {
+          font-size: .7em;
+          font-weight: normal;
+        }
+        .immune,
+        .noeffect,
         .vulnerable,
-        .weak {
-          justify-content: center;
-        }
+        .weak,
         .strong,
         .resist {
+          flex-direction: column;
           justify-content: center;
         }
       }
