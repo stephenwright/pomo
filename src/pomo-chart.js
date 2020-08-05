@@ -3,12 +3,19 @@ import { TYPES } from './types.js';
 import './pomo-type.js';
 
 class PomoChart extends LitElement {
+  static get properties() {
+    return {
+      hideLabels: { type: Boolean, attribute: false },
+    };
+  }
+
   static get styles() {
     return css`
       :host {
         font-family: monospace;
         background-color: #eee;
         padding: 3px;
+        width: 100%;
       }
 
       .row:hover {
@@ -66,11 +73,36 @@ class PomoChart extends LitElement {
       .immune .type {
         font-weight: bold;
       }
+
+      .options {
+        padding: .5em;
+      }
+      .options.label {
+        cursor: pointer;
+        padding: .5em;
+      }
+
+      @media(max-width: 1000px) {
+        .row {
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
+        .vulnerable,
+        .weak {
+          justify-content: center;
+        }
+        .strong,
+        .resist {
+          justify-content: center;
+        }
+      }
     `;
   }
 
   render() {
     return html`
+      <div class="options">
+        <label>Hide Labels <input type="checkbox" @change="${(e) => this.hideLabels = e.target.checked}" /></label>
+      </div>
       <div class="row head">
         <div class="vulnerable">Vulnerable</div>
         <div class="weak">Not Very Effective</div>
@@ -88,28 +120,32 @@ class PomoChart extends LitElement {
     return html`
       <div class="row">
         <div class="vulnerable">
-          ${this._renderTypes(type.vulnerable, true)}
+          ${this._renderTypes(type.vulnerable)}
         </div>
         <div class="weak">
           ${this._renderTypes(type.weak)}
           <div class='noeffect'>${this._renderTypes(type.noeffect)}</div>
         </div>
         <div class="name">
-          <pomo-type name=${type.name}></pomo-type>
+          ${this._renderType(type.name)}
         </div>
         <div class="strong">
           ${this._renderTypes(type.strong)}
         </div>
         <div class="resist">
-          ${this._renderTypes(type.resist, true)}
-          <div class='immune'>${this._renderTypes(type.immune, true)}</div>
+          ${this._renderTypes(type.resist)}
+          <div class='immune'>${this._renderTypes(type.immune)}</div>
         </div>
       </div>
     `;
   }
 
-  _renderTypes(typeList, hideLabel) {
-    return typeList.map((type) => html`<pomo-type name=${type} ?hide-label=${hideLabel}></pomo-type>`);
+  _renderType(type) {
+    return html`<pomo-type name=${type} ?hide-label=${this.hideLabels}></pomo-type>`;
+  }
+
+  _renderTypes(typeList) {
+    return typeList.map((type) => this._renderType(type));
   }
 }
 
