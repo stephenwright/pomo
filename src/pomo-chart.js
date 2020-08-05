@@ -22,13 +22,9 @@ class PomoChart extends LitElement {
         background-color: #eee;
       }
 
-      .row:hover {
-        background-color: #fee;
-      }
-
       .row {
         display: grid;
-        grid-template-columns: 3fr 2fr 1fr 2fr 4fr;
+        grid-template-columns: 3fr 2fr 1fr 2fr 5fr;
         margin: 0px 0;
       }
 
@@ -44,7 +40,11 @@ class PomoChart extends LitElement {
         position: relative;
       }
 
-      .head .col {
+      .row:hover .col {
+        background-color: #fee;
+      }
+
+      .row.head .col {
         background-color: #ddd;
         border-color: #ccc;
       }
@@ -73,6 +73,8 @@ class PomoChart extends LitElement {
 
       .options {
         margin-bottom: 1em;
+        display: flex;
+        justify-content: center;
       }
       .options label {
         cursor: pointer;

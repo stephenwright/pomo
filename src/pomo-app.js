@@ -6,7 +6,10 @@ class PomoApp extends LitElement {
   static get styles() {
     return [colours, css`
       :host {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         font-family: monospace;
         margin: 1em;
       }
