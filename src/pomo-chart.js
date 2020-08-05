@@ -3,6 +3,11 @@ import { TYPES } from './types.js';
 import './pomo-type.js';
 
 class PomoChart extends LitElement {
+  constructor() {
+    super();
+    this.hideLabels = true;
+  }
+
   static get properties() {
     return {
       hideLabels: { type: Boolean, attribute: 'hide-labels' },
@@ -15,7 +20,6 @@ class PomoChart extends LitElement {
         display: inline-block;
         font-family: monospace;
         background-color: #eee;
-        padding: 3px;
       }
 
       .row:hover {
@@ -23,31 +27,30 @@ class PomoChart extends LitElement {
       }
 
       .row {
-        background-color: white;
         display: grid;
-        grid-template-columns: 4fr 2fr 1fr 2fr 4fr;
-        border: 1px solid #ccc;
-        padding: 0px;
-        margin: 3px;
-      }
-
-      .row.head {
-        background-color: #ddd;
-      }
-
-      .name {
-        font-weight: bold;
+        grid-template-columns: 3fr 2fr 1fr 2fr 4fr;
+        margin: 0px 0;
       }
 
       .col {
+        background-color: white;
+        box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.5);
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        border: 1px solid #eee;
-        margin: 1px;
+        margin: 2px;
         padding: 3px;
         position: relative;
+      }
+
+      .head .col {
+        background-color: #ddd;
+        border-color: #ccc;
+      }
+
+      .name {
+        font-weight: bold;
       }
 
       .vulnerable,
@@ -69,11 +72,10 @@ class PomoChart extends LitElement {
       }
 
       .options {
-        padding: .5em;
+        margin-bottom: 1em;
       }
-      .options.label {
+      .options label {
         cursor: pointer;
-        padding: .5em;
       }
 
       @media(max-width: 1000px) {
@@ -96,7 +98,7 @@ class PomoChart extends LitElement {
   render() {
     return html`
       <div class="options">
-        <label>Hide Labels <input type="checkbox" @change="${(e) => this.hideLabels = e.target.checked}" /></label>
+        <label>Hide Labels <input type="checkbox" ?checked=${this.hideLabels} @change="${(e) => this.hideLabels = e.target.checked}" /></label>
       </div>
       <div class="row head">
         <div class="col weak">Not Very Effective</div>

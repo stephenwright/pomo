@@ -6,12 +6,9 @@ class PomoApp extends LitElement {
   static get styles() {
     return [colours, css`
       :host {
+        display: block;
         font-family: monospace;
-      }
-
-      h1, h2 {
-        text-align: center;
-        font-size: 1em;
+        margin: 1em;
       }
       h1 { font-size: 1.2em; }
       h2 { font-size: 1.1em; }
