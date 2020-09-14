@@ -71,13 +71,22 @@ class PomoChart extends LitElement {
         font-weight: bold;
       }
 
+      .none .text {
+        background-color: rgba(255, 255, 255, 0.5);
+        margin: .3em;
+        padding: 1px;
+        font-weight: bold;
+      }
+
       .options {
         margin-bottom: 1em;
         display: flex;
         justify-content: center;
+        align-items: center;
       }
       .options label {
         cursor: pointer;
+        margin: 0 1em;
       }
 
       @media(max-width: 1000px) {
@@ -101,6 +110,7 @@ class PomoChart extends LitElement {
     return html`
       <div class="options">
         <label>Hide Labels <input type="checkbox" ?checked=${this.hideLabels} @change="${(e) => this.hideLabels = e.target.checked}" /></label>
+        <div class="none"><span class="text">No Effect / Immune</span></div>
       </div>
       <div class="row head">
         <div class="col weak">Not Very Effective</div>
